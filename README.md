@@ -1,6 +1,10 @@
-# Whine
+# Whine-Odin
 
-White Noise Generator in C.
+White Noise Generator in Odin.
+
+## Fork ?
+
+Fork of the original Tsoding project with experimentation of sound using sdl and C language.
 
 ## Quick Start
 

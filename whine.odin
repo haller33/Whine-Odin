@@ -7,7 +7,7 @@ import sdl "vendor:sdl2"
 
 
 TEST :: false
-SHOW_LEAK :: false
+SHOW_LEAK :: true
 
 FREQ :: 43200
 SAMPLE_DT :: ( 1.0 / FREQ )
@@ -52,14 +52,6 @@ white_noise_callback :: proc "c" (userdata : rawptr, stream : [^]u8, len : c.int
 
 mainland :: proc () {
 
-    /*
-    gen : sdl.Gen = {
-        .period = 10.0,
-        .volume = 0.5,
-    };
-    don't know yet how to construct this.
-    */
-
     gen := Gen {
 	period = 10.0,
 	volume = 0.5,
@@ -73,11 +65,10 @@ mainland :: proc () {
         callback = white_noise_callback,
         userdata = &gen,
     };
+    
+    quit : bool = true;
 
     
-    quit : bool = false;
-
-
     if 0 > sdl.Init(sdl.INIT_AUDIO | sdl.INIT_VIDEO) {
 
 	fmt.eprintf ( "ERROR: could not initialize SDL: ", sdl.GetError())
@@ -110,13 +101,13 @@ mainland :: proc () {
         event : sdl.Event
 
 	
-	if (sdl.WaitEvent(&event)) {
-            #partial switch event.type {
-            case .sdl.QuitEvent: 
-                quit = true
-	    }
-        }
-	
+	if sdl.WaitEvent(&event) {
+	    
+	    #partial switch event.type {
+		case sdl.EventType.QUIT: quit = false
+		case : ;
+            }
+	}
 
     }
     

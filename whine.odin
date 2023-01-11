@@ -40,6 +40,14 @@ Gen :: struct {
     volume : f32,
 }
 
+
+HEXCOLOR :: proc (code : f32) { 
+    ((code) >> (3 * 8)) & 0xFF, 
+    ((code) >> (2 * 8)) & 0xFF, 
+    ((code) >> (1 * 8)) & 0xFF, 
+    ((code) >> (0 * 8)) & 0xFF
+}
+
 // AudioCallback,
 white_noise_callback :: proc "c" (userdata : rawptr, stream : [^]u8, len : c.int ) {
     // context = default_context()
@@ -88,7 +96,7 @@ mainland :: proc () {
     renderer : ^sdl.Renderer = sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED);
     if renderer == c.NULL {
         fmt.eprintf( "ERROR: could not create a renderer: %s\n", sdl.GetError());
-	return 
+	return  
     }
 
     
@@ -108,6 +116,8 @@ mainland :: proc () {
 		case : ;
             }
 	}
+
+	sdl.SetRenderDrawColor ( render, 
 
     }
 

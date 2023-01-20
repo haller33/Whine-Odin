@@ -40,13 +40,14 @@ Gen :: struct {
     volume : f32,
 }
 
-
+/*
 HEXCOLOR :: proc (code : f32) { 
     ((code) >> (3 * 8)) & 0xFF, 
     ((code) >> (2 * 8)) & 0xFF, 
     ((code) >> (1 * 8)) & 0xFF, 
     ((code) >> (0 * 8)) & 0xFF
 }
+*/
 
 // AudioCallback,
 white_noise_callback :: proc "c" (userdata : rawptr, stream : [^]u8, len : c.int ) {
@@ -57,6 +58,14 @@ white_noise_callback :: proc "c" (userdata : rawptr, stream : [^]u8, len : c.int
     // white_noise(userdata, (Sint16*) stream, len / 2);
 }
 
+
+slider :: proc ( renderer: ^sdl.Renderer, id : i32 , pos_x : f32, pos_y : f32, len_data : f32, value : ^f32, min_data : f32, max_data : f32 ) {
+
+
+    
+    return
+    
+}
 
 mainland :: proc () {
 
@@ -117,9 +126,15 @@ mainland :: proc () {
             }
 	}
 
-	sdl.SetRenderDrawColor ( render, 
+	sdl.SetRenderDrawColor ( renderer, 0xff, 0x22, 0xff, 0x22 )
+	sdl.RenderClear ( renderer )
+
+	
+        sdl.RenderPresent ( renderer )
 
     }
+
+    sdl.Quit ( )
 
     return
     

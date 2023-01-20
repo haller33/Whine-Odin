@@ -2,7 +2,7 @@ package whine
 
 import "core:fmt"
 import "core:mem"
-import "core:c"
+import c "core:c"
 import sdl "vendor:sdl2"
 
 
@@ -40,6 +40,15 @@ Gen :: struct {
     volume : f32,
 }
 
+
+BackGround_Def :: sdl.Color {
+
+	r = 0xff,
+	g = 0x22,
+	b = 0xff,
+	a = 0x20,
+}
+
 /*
 HEXCOLOR :: proc (code : f32) { 
     ((code) >> (3 * 8)) & 0xFF, 
@@ -59,8 +68,12 @@ white_noise_callback :: proc "c" (userdata : rawptr, stream : [^]u8, len : c.int
 }
 
 
-slider :: proc ( renderer: ^sdl.Renderer, id : i32 , pos_x : f32, pos_y : f32, len_data : f32, value : ^f32, min_data : f32, max_data : f32 ) {
+slider :: proc ( renderer: ^sdl.Renderer, id : c.int , pos_x : c.float, pos_y : c.float, len_data : c.float, value : ^c.float, min_data : c.float, max_data : c.float ) {
 
+    {
+	
+        // SDL_SetRenderDrawColor(renderer, HEXCOLOR(SLIDER_COLOR));
+    }
 
     
     return
@@ -126,7 +139,7 @@ mainland :: proc () {
             }
 	}
 
-	sdl.SetRenderDrawColor ( renderer, 0xff, 0x22, 0xff, 0x22 )
+	sdl.SetRenderDrawColor ( renderer, BackGround_Def.r, BackGround_Def.g, BackGround_Def.b, BackGround_Def.a )
 	sdl.RenderClear ( renderer )
 
 	
